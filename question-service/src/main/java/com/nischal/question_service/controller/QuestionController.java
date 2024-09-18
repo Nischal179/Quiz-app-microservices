@@ -2,6 +2,7 @@ package com.nischal.question_service.controller;
 
 
 import com.nischal.question_service.model.Question;
+import com.nischal.question_service.model.QuestionWrapper;
 import com.nischal.question_service.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,16 @@ public class QuestionController {
     }
 
     // generating questions
-    @GetMapping("generate")
+    @GetMapping("/generate")
     public ResponseEntity<List<Integer>>getQuestionsForQuiz(@RequestParam String category,
                                                             @RequestParam Integer numberOfQuestions) {
         return questionService.getAllQuestionsForQuiz(category, numberOfQuestions);
     }
 
     // getQuestions (questionId)
+    @PostMapping("/getQuestions")
+    public ResponseEntity<List<QuestionWrapper>> getQuestionFromId(@RequestBody List<Integer> questionIds) {
+        return questionService.getQuestionsFromId(questionIds);
+    }
     // getScore
 }
