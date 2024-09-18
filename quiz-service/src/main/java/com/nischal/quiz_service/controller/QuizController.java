@@ -1,6 +1,7 @@
 package com.nischal.quiz_service.controller;
 
 
+import com.nischal.quiz_service.dto.QuizDto;
 import com.nischal.quiz_service.model.QuestionWrapper;
 import com.nischal.quiz_service.model.Response;
 import com.nischal.quiz_service.service.QuizService;
@@ -18,9 +19,8 @@ public class QuizController {
     QuizService quizService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createQuiz(@RequestParam String category, @RequestParam int numQ,
-                                             @RequestParam String title) {
-        return quizService.createQuiz(category, numQ, title);
+    public ResponseEntity<String> createQuiz(@RequestBody QuizDto quizDto) {
+        return quizService.createQuiz(quizDto.getCategory(), quizDto.getNumberOfQuestions(), quizDto.getTitle());
     }
 
     @GetMapping("/get/{id}")

@@ -1,7 +1,6 @@
 package com.nischal.quiz_service.service;
 
 import com.nischal.quiz_service.dao.QuizDao;
-import com.nischal.quiz_service.model.Question;
 import com.nischal.quiz_service.model.QuestionWrapper;
 import com.nischal.quiz_service.model.Quiz;
 import com.nischal.quiz_service.model.Response;
@@ -25,7 +24,7 @@ public class QuizService {
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 
-//        List<Question> questions = questionDao.findRandomQuestionsByCategory(category, numQ);
+//        List<Integer> questions = // call generate URL to question_service  --RestTemplate http://localhost:8080/question/generate
 //
 //        Quiz quiz = new Quiz();
 //        quiz.setTitle(title);
@@ -36,36 +35,36 @@ public class QuizService {
     }
 
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
-        Optional<Quiz> quiz = quizDao.findById(id);
-        List<Question> questionsFromDB = quiz.get().getQuestions();
+//        Optional<Quiz> quiz = quizDao.findById(id);
+//        List<Question> questionsFromDB = quiz.get().getQuestions();
         List<QuestionWrapper> questionsForUser = new ArrayList<>();
-        for (Question question : questionsFromDB) {
-            QuestionWrapper questionWrapper = new QuestionWrapper(
-                    question.getId(),
-                    question.getQuestionTitle(),
-                    question.getOption1(),
-                    question.getOption2(),
-                    question.getOption3(),
-                    question.getOption4()
-            );
-
-            questionsForUser.add(questionWrapper);
-        }
+//        for (Question question : questionsFromDB) {
+//            QuestionWrapper questionWrapper = new QuestionWrapper(
+//                    question.getId(),
+//                    question.getQuestionTitle(),
+//                    question.getOption1(),
+//                    question.getOption2(),
+//                    question.getOption3(),
+//                    question.getOption4()
+//            );
+//
+//            questionsForUser.add(questionWrapper);
+//        }
 
         return new ResponseEntity<>(questionsForUser, HttpStatus.OK);
     }
 
     public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
         Optional<Quiz> quiz = quizDao.findById(id);
-        List<Question> questions = quiz.get().getQuestions();
+//        List<Question> questions = quiz.get().getQuestions();
         int correctAnswer = 0;
-        int index = 0;
-        for (Response response : responses) {
-            if (response.getResponse().equals(questions.get(index).getRightAnswer()))
-                correctAnswer++;
-
-            index++;
-        }
+//        int index = 0;
+//        for (Response response : responses) {
+//            if (response.getResponse().equals(questions.get(index).getRightAnswer()))
+//                correctAnswer++;
+//
+//            index++;
+//        }
         return new ResponseEntity<>(correctAnswer, HttpStatus.OK);
     }
 }
