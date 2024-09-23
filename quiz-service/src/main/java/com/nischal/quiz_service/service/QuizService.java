@@ -1,6 +1,7 @@
 package com.nischal.quiz_service.service;
 
 import com.nischal.quiz_service.dao.QuizDao;
+import com.nischal.quiz_service.feign.QuizInterface;
 import com.nischal.quiz_service.model.QuestionWrapper;
 import com.nischal.quiz_service.model.Quiz;
 import com.nischal.quiz_service.model.Response;
@@ -19,17 +20,16 @@ public class QuizService {
     @Autowired
     QuizDao quizDao;
 
-//    @Autowired
-//    QuestionDao questionDao;
+    @Autowired
+    QuizInterface quizInterface;
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 
-//        List<Integer> questions = // call generate URL to question_service  --RestTemplate http://localhost:8080/question/generate
-//
-//        Quiz quiz = new Quiz();
-//        quiz.setTitle(title);
-//        quiz.setQuestions(questions);
-//        quizDao.save(quiz);
+        List<Integer> questions = quizInterface.getQuestionsForQuiz(category, numQ).getBody();
+        Quiz quiz = new Quiz();
+        quiz.setTitle(title);
+        quiz.setQuestionIds(questions);
+        quizDao.save(quiz);
 
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
